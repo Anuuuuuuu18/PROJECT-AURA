@@ -65,7 +65,7 @@ The included Vosk English (India) model is about 57 MB. Voice recognition runs l
 
 ## Publish the demo
 
-The static demo is in <code>docs/</code>. Netlify is configured to publish that directory using <code>netlify.toml</code> and the free site has been deployed to <code>https://project-aura-322.netlify.app/</code>. The project is currently behind Netlify sign-in protection; set its visibility to <strong>Public</strong> in <strong>Project configuration → General → Visitor access</strong> to let visitors in. Connect this repository to Netlify for automatic future deploys, or run <code>netlify deploy --prod --dir docs</code> after signing in.
+The static demo is in <code>docs/</code>. Netlify is configured to publish that directory using <code>netlify.toml</code>. The public demo is available at <strong><a href="https://project-aura-322.netlify.app/">project-aura-322.netlify.app</a></strong> and does not require visitors to sign in. To deploy updates, connect this repository to Netlify or run <code>netlify deploy --prod --dir docs</code> after signing in.
 
 ## Privacy by design
 
