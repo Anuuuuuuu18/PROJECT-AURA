@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <a href="https://anuuuuuu18.github.io/AURA/"><img src="https://img.shields.io/badge/Live%20demo-Try%20AURA-d94f91?style=for-the-badge" alt="Try the live AURA demo"></a>
+  <a href="https://project-aura-322.netlify.app/"><img src="https://img.shields.io/badge/Live%20demo-Try%20AURA-d94f91?style=for-the-badge" alt="Try the live AURA demo"></a>
   <img src="https://img.shields.io/badge/Python-3.10%2B-e982b1?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.10 or newer">
   <img src="https://img.shields.io/badge/Computer%20vision-MediaPipe-c7659c?style=for-the-badge" alt="MediaPipe computer vision">
   <img src="https://img.shields.io/badge/Voice-Offline-d94f91?style=for-the-badge" alt="Offline voice recognition">
@@ -15,7 +15,7 @@
 <p align="center"><strong>Your hands become the interface.</strong><br>Move your cursor, scroll with one finger, click with a pinch, and open apps by voice.</p>
 
 <p align="center">
-  <a href="https://anuuuuuu18.github.io/AURA/">✨ Open the interactive demo</a>
+  <a href="https://project-aura-322.netlify.app/">✨ Open the interactive demo</a>
   &nbsp; · &nbsp;
   <a href="#run-aura-on-windows">Run the desktop controller</a>
   &nbsp; · &nbsp;
@@ -28,11 +28,11 @@
 
 AURA is a free Windows desktop experiment that combines webcam hand tracking with offline voice commands. It is built to feel approachable: one finger moves the pointer and scrolls vertically, a pinch clicks, and a short spoken command can open a Windows app.
 
-The **live demo** is a browser-safe interactive preview of the controls. Real webcam and desktop control run locally in the Python app; a GitHub Pages website cannot move the visitor's system cursor.
+The **live demo** is a browser-safe interactive preview of the controls. Real webcam and desktop control run locally in the Python app; a hosted website cannot move the visitor's system cursor.
 
 ## Try the demo
 
-**[Open the pink AURA demo →](https://anuuuuuu18.github.io/AURA/)**
+**[Open the pink AURA demo →](https://project-aura-322.netlify.app/)**
 
 Drag in the mock browser window to move the glowing pointer and scroll its sample page. Try the pinch button or type **“open Chrome”** in the voice simulator. The page needs no camera, microphone, account, or installation.
 
@@ -65,14 +65,14 @@ The included Vosk English (India) model is about 57 MB. Voice recognition runs l
 
 ## Publish the demo
 
-The static demo is ready in <code>docs/</code>. After creating the GitHub repository, open <strong>Settings → Pages</strong>, choose <strong>Deploy from a branch</strong>, select <code>main</code> and <code>/docs</code>, then save. GitHub Pages will publish the linked demo URL.
+The static demo is in <code>docs/</code>. Netlify is configured to publish that directory using <code>netlify.toml</code> and the free site has been deployed to <code>https://project-aura-322.netlify.app/</code>. The project is currently behind Netlify sign-in protection; set its visibility to <strong>Public</strong> in <strong>Project configuration → General → Visitor access</strong> to let visitors in. Connect this repository to Netlify for automatic future deploys, or run <code>netlify deploy --prod --dir docs</code> after signing in.
 
 ## Privacy by design
 
 - Camera frames are processed locally by MediaPipe and are not recorded or uploaded.
 - Voice is recognized locally by Vosk; audio is not sent to a cloud service.
 - PyAutoGUI acts on the local desktop only when <code>--live</code> is enabled and controls are resumed.
-- The Pages demo is a simulation and does not request camera or microphone access.
+- The hosted demo is a simulation and does not request camera or microphone access.
 
 ## Project layout
 
@@ -80,7 +80,7 @@ The static demo is ready in <code>docs/</code>. After creating the GitHub reposi
 aura_controls.py                Cursor, one-finger scroll, pinch, and safety controls
 voice_control.py                Offline voice listener and safe app launching
 vosk-model-small-en-in-0.4/     Bundled offline English (India) model
-docs/index.html                 Pink interactive GitHub Pages demo
+docs/index.html                 Pink interactive static demo
 docs/assets/aura-banner.svg     Project banner
 requirements.txt                Python dependencies</code></pre>
 
