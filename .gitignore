@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.py[cod]
+hand_landmarker.task
+blaze_face_short_range.tflite
+vosk-model-small-en-in-0.4.zip
+*.download
+.voice-model-unpack/
+artwork/
