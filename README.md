@@ -2,92 +2,66 @@
   <img src="docs/assets/aura-banner.svg" alt="AURA — Your hands become the interface" width="100%">
 </p>
 
-<p align="center">
-  <a href="https://project-aura-322.netlify.app/"><img src="https://img.shields.io/badge/Live%20demo-Try%20AURA-d94f91?style=for-the-badge" alt="Try the live AURA demo"></a>
-  <img src="https://img.shields.io/badge/Python-3.10%2B-e982b1?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.10 or newer">
-  <img src="https://img.shields.io/badge/Computer%20vision-MediaPipe-c7659c?style=for-the-badge" alt="MediaPipe computer vision">
-  <img src="https://img.shields.io/badge/Voice-Offline-d94f91?style=for-the-badge" alt="Offline voice recognition">
-  <img src="https://img.shields.io/badge/License-MIT-e982b1?style=for-the-badge" alt="MIT license">
-</p>
-
 <h1 align="center">AURA</h1>
 
-<p align="center"><strong>Your hands become the interface.</strong><br>Move your cursor, scroll with one finger, click with a pinch, and open apps by voice.</p>
+<p align="center">
+  Hands-free desktop control with hand gestures and voice.
+</p>
 
 <p align="center">
-  <a href="https://project-aura-322.netlify.app/">✨ Open the interactive demo</a>
-  &nbsp; · &nbsp;
-  <a href="#run-aura-on-windows">Run the desktop controller</a>
-  &nbsp; · &nbsp;
-  <a href="#privacy-by-design">Privacy</a>
+  <a href="https://project-aura-322.netlify.app/">Live demo</a>
+  ·
+  <a href="#getting-started">Getting started</a>
+  ·
+  <a href="#privacy">Privacy</a>
 </p>
 
 ---
 
-## Meet AURA
+## Overview
 
-AURA is a free Windows desktop experiment that combines webcam hand tracking with offline voice commands. It is built to feel approachable: one finger moves the pointer and scrolls vertically, a pinch clicks, and a short spoken command can open a Windows app.
+AURA is a Windows desktop application that uses a webcam to track hand gestures and offline speech recognition to control common desktop actions. Move the pointer, scroll, click with a pinch, pause or resume control, and launch supported apps by voice.
 
-The **live demo** is a browser-safe interactive preview of the controls. Real webcam and desktop control run locally in the Python app; a hosted website cannot move the visitor's system cursor.
+The [browser demo](https://project-aura-322.netlify.app/) is an interactive preview. Desktop control requires running the Python application locally.
 
-## Try the demo
+## Controls
 
-**[Open the pink AURA demo →](https://project-aura-322.netlify.app/)**
-
-Drag in the mock browser window to move the glowing pointer and scroll its sample page. Try the pinch button or type **“open Chrome”** in the voice simulator. The page needs no camera, microphone, account, or installation.
-
-## What you can do
-
-| Input | Action |
+| Gesture or command | Action |
 | --- | --- |
-| ☝️ Index finger | Move the cursor; move up or down to scroll the page under it |
-| ✌️ Two fingers | Scroll vertically |
-| 🤏 Pinch | Click once |
-| ✊ Fist for one second | Pause all desktop controls |
-| ✋ Open palm for 1.5 seconds | Resume controls |
-| 🗣️ “Open Chrome” | Launch an installed app with a matching Start Menu shortcut |
-| 🗣️ “Pause AURA” / “Resume AURA” | Pause or resume hands-free |
+| Index finger | Move the pointer |
+| Index finger or peace sign | Scroll |
+| Pinch | Click |
+| Hold a fist | Pause controls |
+| Hold an open palm | Resume controls |
+| “Open [app]” | Launch a matching installed app |
+| “Pause AURA” / “Resume AURA” | Pause or resume controls |
 
-Live control starts **paused**. Say **“resume AURA”** or hold an open palm to activate it. AURA never runs spoken text as a shell command; voice launch only opens an installed Windows app.
+Live control starts paused. Resume with an open palm or voice command before using desktop actions.
 
-## Run AURA on Windows
+## Getting started
 
-Use Python 3.10 or newer. Open this repository in VS Code, then run these commands in its terminal:
+Requirements: Windows and Python 3.10 or later.
 
-<pre><code>python -m venv .venv
+```powershell
+python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
-python aura_controls.py --live</code></pre>
+python aura_controls.py --live
+```
 
-Allow camera and microphone access for desktop apps when Windows asks. Keep your hand in the camera frame; move your index finger up or down slowly to scroll. Press <code>P</code> to pause/resume or <code>Q</code> / <code>Esc</code> to exit. For a no-control preview, omit <code>--live</code>.
+Allow camera and microphone access when prompted. Press `P` to pause or resume, and `Q` or `Esc` to quit. Run `python aura_controls.py` without `--live` for a dry run.
 
-The included Vosk English (India) model is about 57 MB. Voice recognition runs locally. To disable voice listening, add <code>--no-voice</code>.
+## Privacy
 
-## Publish the demo
+Hand tracking and speech recognition run locally. Camera and microphone data are not uploaded by the desktop app. The browser demo is a simulation and does not request camera or microphone access.
 
-The static demo is in <code>docs/</code>. Netlify is configured to publish that directory using <code>netlify.toml</code>. The public demo is available at <strong><a href="https://project-aura-322.netlify.app/">project-aura-322.netlify.app</a></strong> and does not require visitors to sign in. To deploy updates, connect this repository to Netlify or run <code>netlify deploy --prod --dir docs</code> after signing in.
+## Project files
 
-## Privacy by design
+- `aura_controls.py` — desktop controls and safety behavior
+- `main.py` — hand tracking and gesture recognition
+- `voice_control.py` — offline voice commands and app launching
+- `docs/` — static browser demo
 
-- Camera frames are processed locally by MediaPipe and are not recorded or uploaded.
-- Voice is recognized locally by Vosk; audio is not sent to a cloud service.
-- PyAutoGUI acts on the local desktop only when <code>--live</code> is enabled and controls are resumed.
-- The hosted demo is a simulation and does not request camera or microphone access.
+## License
 
-## Project layout
-
-<pre><code>main.py                         Hand and finger recognition
-aura_controls.py                Cursor, one-finger scroll, pinch, and safety controls
-voice_control.py                Offline voice listener and safe app launching
-vosk-model-small-en-in-0.4/     Bundled offline English (India) model
-docs/index.html                 Pink interactive static demo
-docs/assets/aura-banner.svg     Project banner
-requirements.txt                Python dependencies</code></pre>
-
-## Technology
-
-Python · OpenCV · MediaPipe · NumPy · PyAutoGUI · Vosk · sounddevice
-
-The bundled Vosk model is licensed under Apache-2.0. See [third-party notices](THIRD_PARTY_NOTICES.md). AURA's source code is MIT licensed; see [LICENSE](LICENSE).
-
-<p align="center"><sub>Made with a little pink, a webcam, and a curious idea. 🎀</sub></p>
+The AURA source code is licensed under the MIT License. See [LICENSE](LICENSE). The bundled Vosk model is licensed under Apache-2.0; see [third-party notices](THIRD_PARTY_NOTICES.md).
