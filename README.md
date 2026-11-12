@@ -5,26 +5,33 @@
 <h1 align="center">AURA</h1>
 
 <p align="center">
-  Hands-free desktop control with hand gestures and voice.
+  <strong>Hands-free desktop control with hand gestures and voice</strong><br>
+  <sub>A little more magic in your everyday workflow ✨</sub>
 </p>
 
 <p align="center">
-  <a href="https://project-aura-322.netlify.app/">Live demo</a>
-  ·
+  <img src="https://img.shields.io/badge/Python-3.10%2B-f4a7c7?style=for-the-badge&logo=python&logoColor=5a3045" alt="Python 3.10 or later">
+  <img src="https://img.shields.io/badge/Platform-Windows-f8c4dc?style=for-the-badge" alt="Windows">
+  <img src="https://img.shields.io/badge/License-MIT-fce1ec?style=for-the-badge" alt="MIT License">
+</p>
+
+<p align="center">
+  <a href="https://project-aura-322.netlify.app/">🌷 Live demo</a>
+  &nbsp; · &nbsp;
   <a href="#getting-started">Getting started</a>
-  ·
+  &nbsp; · &nbsp;
   <a href="#privacy">Privacy</a>
 </p>
 
 ---
 
-## Overview
+## 🌸 Overview
 
 AURA is a Windows desktop application that uses a webcam to track hand gestures and offline speech recognition to control common desktop actions. Move the pointer, scroll, click with a pinch, pause or resume control, and launch supported apps by voice.
 
 The [browser demo](https://project-aura-322.netlify.app/) is an interactive preview. Desktop control requires running the Python application locally.
 
-## Controls
+## ✨ Controls
 
 | Gesture or command | Action |
 | --- | --- |
@@ -38,7 +45,7 @@ The [browser demo](https://project-aura-322.netlify.app/) is an interactive prev
 
 Live control starts paused. Resume with an open palm or voice command before using desktop actions.
 
-## Getting started
+## 💻 Getting started
 
 Requirements: Windows and Python 3.10 or later.
 
@@ -51,11 +58,11 @@ python aura_controls.py --live
 
 Allow camera and microphone access when prompted. Press `P` to pause or resume, and `Q` or `Esc` to quit. Run `python aura_controls.py` without `--live` for a dry run.
 
-## Privacy
+## 🔒 Privacy
 
 Hand tracking and speech recognition run locally. Camera and microphone data are not uploaded by the desktop app. The browser demo is a simulation and does not request camera or microphone access.
 
-## Project files
+## 📁 Project files
 
 - `aura_controls.py` — desktop controls and safety behavior
 - `main.py` — hand tracking and gesture recognition

@@ -1,29 +1,29 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="500" viewBox="0 0 1600 500" role="img" aria-labelledby="title desc">
   <title id="title">AURA — your hands become the interface</title>
-  <desc id="desc">A warm pink and plum banner with a glowing hand gesture illustration and AURA title.</desc>
+  <desc id="desc">A soft pastel pink banner with a glowing hand gesture illustration and AURA title.</desc>
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#2a1024"/><stop offset=".54" stop-color="#63284f"/><stop offset="1" stop-color="#bb4d85"/></linearGradient>
-    <radialGradient id="orb"><stop stop-color="#ffd6eb" stop-opacity=".55"/><stop offset="1" stop-color="#ffa3d0" stop-opacity="0"/></radialGradient>
-    <linearGradient id="title" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#fff5fa"/><stop offset="1" stop-color="#ffc1df"/></linearGradient>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffe8f2"/><stop offset=".54" stop-color="#ffc8df"/><stop offset="1" stop-color="#f49bc1"/></linearGradient>
+    <radialGradient id="orb"><stop stop-color="#fffafd" stop-opacity=".9"/><stop offset="1" stop-color="#ffb5d4" stop-opacity="0"/></radialGradient>
+    <linearGradient id="title" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#51263e"/><stop offset="1" stop-color="#813d62"/></linearGradient>
     <filter id="glow"><feGaussianBlur stdDeviation="9" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
   </defs>
   <rect width="1600" height="500" rx="36" fill="url(#bg)"/>
   <circle cx="1360" cy="88" r="360" fill="url(#orb)"/>
   <circle cx="1510" cy="425" r="260" fill="url(#orb)" opacity=".4"/>
-  <g fill="none" stroke="#ffd6eb" stroke-opacity=".16">
+  <g fill="none" stroke="#fffafd" stroke-opacity=".38">
     <path d="M0 395C280 275 365 560 720 410s460-230 880-80"/>
     <path d="M0 430C280 310 365 595 720 445s460-230 880-80"/>
     <path d="M0 465C280 345 365 630 720 480s460-230 880-80"/>
   </g>
-  <g transform="translate(1110 72)" filter="url(#glow)" fill="none" stroke="#ffe2f1" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="translate(1110 72)" filter="url(#glow)" fill="none" stroke="#fffafd" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
     <path d="M90 267V131c0-20 16-36 36-36s36 16 36 36v73-122c0-20 16-36 36-36s36 16 36 36v122-95c0-20 16-36 36-36s36 16 36 36v115-60c0-20 16-36 36-36s36 16 36 36v128c0 87-63 150-150 150h-40c-58 0-105-24-140-70l-52-68c-13-17-9-42 8-55 16-12 38-10 52 4l35 36z"/>
-    <path d="M30 39c-19 25-29 54-29 84M420 39c19 25 29 54 29 84M-31 0l-27 19M478 0l27 19" stroke="#ff8ac0" stroke-width="8" opacity=".9"/>
+    <path d="M30 39c-19 25-29 54-29 84M420 39c19 25 29 54 29 84M-31 0l-27 19M478 0l27 19" stroke="#d95f94" stroke-width="8" opacity=".9"/>
     <circle cx="226" cy="250" r="8" fill="#fff" stroke="none"/>
   </g>
-  <g fill="#ffd6eb" opacity=".8"><circle cx="1000" cy="95" r="5"/><circle cx="1060" cy="150" r="3"/><circle cx="1460" cy="80" r="4"/><circle cx="1500" cy="180" r="6"/><circle cx="1065" cy="330" r="5"/></g>
+  <g fill="#fffafd" opacity=".9"><circle cx="1000" cy="95" r="5"/><circle cx="1060" cy="150" r="3"/><circle cx="1460" cy="80" r="4"/><circle cx="1500" cy="180" r="6"/><circle cx="1065" cy="330" r="5"/></g>
   <text x="105" y="210" fill="url(#title)" font-family="Georgia,serif" font-size="124" font-weight="700" letter-spacing="8">AURA</text>
-  <text x="115" y="275" fill="#ffc7e0" font-family="Arial,sans-serif" font-size="27" letter-spacing="5">HANDS FREE. DESKTOP READY.</text>
-  <text x="115" y="344" fill="#fff4fa" font-family="Arial,sans-serif" font-size="30">Your hands become the interface.</text>
-  <rect x="115" y="387" width="310" height="49" rx="24" fill="#d94f91"/>
-  <text x="145" y="420" fill="#fff" font-family="Arial,sans-serif" font-size="18" font-weight="700" letter-spacing="2">VISION · VOICE · AURA</text>
+  <text x="115" y="275" fill="#783b5b" font-family="Arial,sans-serif" font-size="27" letter-spacing="5">HANDS FREE. DESKTOP READY.</text>
+  <text x="115" y="344" fill="#51263e" font-family="Arial,sans-serif" font-size="30">Your hands become the interface.</text>
+  <rect x="115" y="387" width="310" height="49" rx="24" fill="#fffafd" fill-opacity=".72"/>
+  <text x="145" y="420" fill="#783b5b" font-family="Arial,sans-serif" font-size="18" font-weight="700" letter-spacing="2">VISION · VOICE · AURA</text>
 </svg>
