@@ -449,6 +449,11 @@
       overflow: hidden;
     }
 
+    .demo-window {
+      position: relative;
+      scroll-margin-top: 90px;
+    }
+
     .demo-toolbar {
       display: flex;
       align-items: center;
@@ -497,6 +502,7 @@
 
     .mock-window {
       position: relative;
+      height: 360px;
       min-height: 360px;
       border-radius: 20px;
       background: linear-gradient(180deg, #fffefc 0%, #fff3f8 110%);
@@ -523,6 +529,9 @@
 
     .mock-content {
       padding: 26px 24px;
+      height: 318px;
+      overflow-y: auto;
+      overscroll-behavior: contain;
       position: relative;
     }
 
@@ -603,7 +612,13 @@
       box-shadow: 0 0 0 10px rgba(255, 92, 168, 0.18), 0 0 22px rgba(255, 92, 168, 0.45);
       transform: translate(-50%, -50%);
       z-index: 5;
+      opacity: 0;
+      pointer-events: none;
       transition: box-shadow 0.12s ease;
+    }
+
+    .fake-cursor.visible {
+      opacity: 1;
     }
 
     .fake-cursor.ping {
@@ -759,7 +774,7 @@
         <a href="#controls">Controls</a>
         <a href="#launch">Launch</a>
       </div>
-      <a href="#launch" class="nav-cta">Try the demo</a>
+      <a href="#demo" class="nav-cta">Try the demo</a>
     </nav>
   </header>
 
@@ -860,7 +875,7 @@
                 <div class="mock-lower">
                   <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
                     <span style="font-size:0.7rem;font-weight:900;letter-spacing:0.12em;text-transform:uppercase;color:#9d7180;">Gesture feed</span>
-                    <span style="font-size:0.75rem;color:#d95d93;font-weight:800;">Ready</span>
+                    <span id="demo-status" aria-live="polite" style="font-size:0.75rem;color:#d95d93;font-weight:800;">Try moving your pointer</span>
                   </div>
                   <div style="margin-top:18px;display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:10px;">
                     <div style="border-radius:12px; background:rgba(255,255,255,0.6); height:52px; border:1px solid rgba(231,187,204,0.7);"></div>
@@ -935,22 +950,38 @@
 
   <script>
     const cursor = document.getElementById('cursor');
-    let px = 44, py = 42;
+    const demo = document.querySelector('.demo-window');
+    const mockContent = document.querySelector('.mock-content');
+    const demoStatus = document.getElementById('demo-status');
+    let pingTimer;
 
-    function tick() {
-      px += (Math.random() * 8 - 4);
-      py += (Math.random() * 8 - 4);
-      px = Math.min(60, Math.max(25, px));
-      py = Math.min(60, Math.max(25, py));
-      cursor.style.left = px + '%';
-      cursor.style.top = py + '%';
-      if (Math.random() > 0.68) {
-        cursor.classList.add('ping');
-        setTimeout(() => cursor.classList.remove('ping'), 180);
-      }
-      requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
+    demo.addEventListener('pointermove', (event) => {
+      const bounds = demo.getBoundingClientRect();
+      cursor.style.left = `${event.clientX - bounds.left}px`;
+      cursor.style.top = `${event.clientY - bounds.top}px`;
+      cursor.classList.add('visible');
+    });
+
+    demo.addEventListener('pointerleave', () => {
+      cursor.classList.remove('visible');
+    });
+
+    demo.addEventListener('pointerdown', () => {
+      cursor.classList.add('ping');
+      demoStatus.textContent = 'Click simulated';
+      window.clearTimeout(pingTimer);
+      pingTimer = window.setTimeout(() => cursor.classList.remove('ping'), 220);
+    });
+
+    mockContent.addEventListener('scroll', () => {
+      demoStatus.textContent = 'Sample page scrolled';
+    }, { passive: true });
+
+    document.querySelectorAll('a[href="#demo"]').forEach((link) => {
+      link.addEventListener('click', () => {
+        window.setTimeout(() => demo.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0);
+      });
+    });
   </script>
 </body>
 </html>
