@@ -1,5 +1,7 @@
 import io
 import json
+import os
+import tempfile
 import unittest
 from unittest.mock import patch
 
@@ -8,6 +10,7 @@ from voice_control import (
     OpenAIRequestError,
     _local_command,
     _validated_command,
+    load_openai_api_key,
 )
 
 
@@ -37,6 +40,25 @@ class LocalCommandTests(unittest.TestCase):
             ).action,
             "unknown",
         )
+
+    def test_api_key_loads_from_local_env_file_without_echoing_it(self):
+        with tempfile.TemporaryDirectory() as directory:
+            env_file = os.path.join(directory, ".env")
+            with open(env_file, "w", encoding="utf-8") as file:
+                file.write("OPENAI_API_KEY=test-local-key\n")
+
+            with patch.dict(os.environ):
+                os.environ.pop("OPENAI_API_KEY", None)
+                self.assertEqual(load_openai_api_key(env_file), "test-local-key")
+
+    def test_existing_environment_key_takes_precedence_over_env_file(self):
+        with tempfile.TemporaryDirectory() as directory:
+            env_file = os.path.join(directory, ".env")
+            with open(env_file, "w", encoding="utf-8") as file:
+                file.write("OPENAI_API_KEY=file-key\n")
+
+            with patch.dict(os.environ, {"OPENAI_API_KEY": "environment-key"}):
+                self.assertEqual(load_openai_api_key(env_file), "environment-key")
 
 
 class OpenAIClientTests(unittest.TestCase):

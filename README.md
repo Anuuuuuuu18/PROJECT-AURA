@@ -63,7 +63,15 @@ Allow camera and microphone access when prompted. Press `P` to pause or resume, 
 
 ### Optional OpenAI voice enhancement
 
-The Windows app's default voice mode uses offline Vosk. OpenAI is an optional voice transcription and command-interpretation service; it does not improve hand tracking. Start the app from a terminal with `--openai` and enter your key at the hidden prompt:
+The Windows app's default voice mode uses offline Vosk. OpenAI is an optional voice transcription and command-interpretation service; it does not improve hand tracking. To keep your key local, copy `.env.example` to `.env`, put the key after `OPENAI_API_KEY=`, then start AURA with `--openai`:
+
+```powershell
+Copy-Item .env.example .env
+notepad .env
+.\.venv\Scripts\python.exe aura_controls.py --live --openai
+```
+
+You can also run the command below and enter your key at the hidden prompt:
 
 ```powershell
 python aura_controls.py --live --openai

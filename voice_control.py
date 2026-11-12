@@ -19,6 +19,14 @@ from array import array
 from dataclasses import dataclass
 from pathlib import Path
 
+from dotenv import load_dotenv
+
+
+def load_openai_api_key(env_file: str | Path | None = None) -> str:
+    """Load a local OpenAI key without overriding an explicitly set environment value."""
+    load_dotenv(env_file or Path(__file__).with_name(".env"), override=False)
+    return os.environ.get("OPENAI_API_KEY", "").strip()
+
 
 @dataclass(frozen=True)
 class VoiceCommand:
@@ -418,4 +426,4 @@ class VoiceListener:
                         phrase_audio.clear()
                         phrase_too_long = False
         except Exception as exc:
-            self.status = f"unavailable ({type(exc).__name__})"
+            self.status = f"unavailable ({type(exc).__name__}): {exc}"

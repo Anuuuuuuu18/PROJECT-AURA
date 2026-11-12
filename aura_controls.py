@@ -25,7 +25,7 @@ import sys
 import time
 
 import cv2
-from voice_control import VoiceListener, launch_application
+from voice_control import VoiceListener, launch_application, load_openai_api_key
 
 from main import (
     DETECTION_CONFIDENCE,
@@ -231,11 +231,11 @@ def run(args):
         raise SystemExit("--live needs pyautogui and a display. Run: pip install pyautogui")
     api_key = None
     if args.openai and not args.no_voice:
-        api_key = os.environ.get("OPENAI_API_KEY", "").strip()
+        api_key = load_openai_api_key(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env"))
         if not api_key and sys.stdin.isatty():
-            api_key = getpass.getpass("OpenAI API key: ").strip()
+            api_key = getpass.getpass("OpenAI API key (or save it in .env): ").strip()
         if not api_key:
-            raise SystemExit("OpenAI API key is required when using --openai")
+            raise SystemExit("OpenAI API key not found. Add OPENAI_API_KEY=... to the project .env file or run in a terminal to enter it securely.")
 
     sw, sh = pyautogui.size() if pyautogui else (1920, 1080)
     ctl = Controller(args.live, sw, sh)

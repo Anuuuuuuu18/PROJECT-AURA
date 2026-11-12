@@ -3,3 +3,4 @@ opencv-python>=4.8
 pyautogui>=0.9.54
 vosk>=0.3.45
 sounddevice>=0.4.6
+python-dotenv>=1.0
