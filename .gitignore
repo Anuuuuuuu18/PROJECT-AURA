@@ -7,6 +7,9 @@ vosk-model-small-en-in-0.4.zip
 *.download
 .voice-model-unpack/
 artwork/
+.env
+.env.*
+!.env.example
 
 # Local Netlify folder
 .netlify

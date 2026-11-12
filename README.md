@@ -38,6 +38,7 @@ The [browser demo](https://project-aura-322.netlify.app/) is an interactive prev
 | Index finger | Move the pointer |
 | Index finger or peace sign | Scroll |
 | Pinch | Click |
+| “Scroll up” / “Scroll down” | Scroll by voice |
 | Hold a fist | Pause controls |
 | Hold an open palm | Resume controls |
 | “Open [app]” | Launch a matching installed app |
@@ -58,9 +59,19 @@ python aura_controls.py --live
 
 Allow camera and microphone access when prompted. Press `P` to pause or resume, and `Q` or `Esc` to quit. Run `python aura_controls.py` without `--live` for a dry run.
 
+### Optional OpenAI voice enhancement
+
+The default voice mode uses offline Vosk. To use OpenAI for phrase transcription and command interpretation, start AURA with `--openai`; enter your key at the hidden terminal prompt, or set `OPENAI_API_KEY` in the current PowerShell session first:
+
+```powershell
+python aura_controls.py --live --openai
+```
+
+In this mode, detected voice clips and their transcripts are sent to OpenAI. API usage may incur charges. Keep the key local; never commit it or put it in the public website.
+
 ## 🔒 Privacy
 
-Hand tracking and speech recognition run locally. Camera and microphone data are not uploaded by the desktop app. The browser demo is a simulation and does not request camera or microphone access.
+Hand tracking runs locally. Voice recognition is local by default; `--openai` uploads detected voice clips for cloud transcription and command interpretation. The browser demo is a simulation and does not request camera or microphone access.
 
 ## 📁 Project files
 

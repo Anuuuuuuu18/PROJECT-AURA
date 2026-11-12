@@ -19,10 +19,13 @@ Extra safety: slamming the real mouse into any screen corner also stops AURA.
 """
 
 import argparse
+import getpass
+import os
+import sys
 import time
 
 import cv2
-from voice_control import VoiceListener, launch_application, parse_open_command
+from voice_control import VoiceListener, launch_application
 
 from main import (
     DETECTION_CONFIDENCE,
@@ -226,6 +229,13 @@ def draw_hud(frame, ctl, gesture, fps, now, voice_status="disabled"):
 def run(args):
     if args.live and pyautogui is None:
         raise SystemExit("--live needs pyautogui and a display. Run: pip install pyautogui")
+    api_key = None
+    if args.openai and not args.no_voice:
+        api_key = os.environ.get("OPENAI_API_KEY", "").strip()
+        if not api_key and sys.stdin.isatty():
+            api_key = getpass.getpass("OpenAI API key: ").strip()
+        if not api_key:
+            raise SystemExit("OpenAI API key is required when using --openai")
 
     sw, sh = pyautogui.size() if pyautogui else (1920, 1080)
     ctl = Controller(args.live, sw, sh)
@@ -237,7 +247,7 @@ def run(args):
 
     voice = None
     if not args.no_voice:
-        voice = VoiceListener(args.voice_model)
+        voice = VoiceListener(args.voice_model, openai_api_key=api_key)
         voice.start()
 
     prev = time.time()
@@ -273,31 +283,38 @@ def run(args):
                 ctl.lost_hand()
 
             if voice:
-                for spoken in voice.get_commands():
+                for command in voice.get_commands():
                     now = time.time()
-                    text = spoken.casefold().strip()
-                    if text in ("resume", "resume aura", "start controls", "unpause"):
+                    if command.action == "resume":
                         if ctl.paused:
                             ctl.toggle_pause(now)
                         ctl.note("VOICE: controls resumed", now)
-                        continue
-                    if text in ("pause", "pause aura", "stop controls"):
+                    elif command.action == "pause":
                         if not ctl.paused:
                             ctl.toggle_pause(now)
                         ctl.note("VOICE: controls paused", now)
-                        continue
-
-                    app_name = parse_open_command(text)
-                    if app_name:
+                    elif command.action == "open_app":
                         if not args.live:
-                            ctl.note(f"VOICE TEST: would open {app_name}", now)
+                            ctl.note(f"VOICE TEST: would open {command.target}", now)
                         elif ctl.paused:
                             ctl.note("VOICE: say 'resume AURA' before opening apps", now)
                         else:
-                            _, message = launch_application(app_name)
+                            _, message = launch_application(command.target)
                             ctl.note(f"VOICE: {message}", now)
+                    elif command.action == "scroll":
+                        if ctl.paused:
+                            ctl.note("VOICE: say 'resume AURA' before scrolling", now)
+                        elif not args.live:
+                            ctl.note(f"VOICE TEST: would scroll {command.direction}", now)
+                        else:
+                            amount = command.amount if command.direction == "up" else -command.amount
+                            pyautogui.scroll(amount)
+                            ctl.note(f"VOICE: scroll {command.direction}", now)
                     else:
-                        ctl.note(f"HEARD: {spoken[:48]}", now)
+                        ctl.note(f"HEARD: {command.transcript[:48]}", now)
+                    if command.error:
+                        voice.status = command.error
+                        ctl.note(f"VOICE: {command.error}"[:70], now)
 
             fps = 1.0 / max(now - prev, 1e-6)
             prev = now
@@ -321,9 +338,11 @@ def main():
     parser = argparse.ArgumentParser(description="AURA Phase 2: gesture controls")
     parser.add_argument("--live", action="store_true", help="actually control the mouse (default is dry-run)")
     parser.add_argument("--camera", type=int, default=0, help="camera index (default 0)")
-    parser.add_argument("--no-voice", action="store_true", help="disable offline voice commands")
+    parser.add_argument("--no-voice", action="store_true", help="disable voice commands")
     parser.add_argument("--voice-model", default="vosk-model-small-en-in-0.4",
                         help="path to the offline Vosk English (India) model folder")
+    parser.add_argument("--openai", action="store_true",
+                        help="use OpenAI for cloud transcription and command interpretation (requires API key)")
     args = parser.parse_args()
 
     try:
