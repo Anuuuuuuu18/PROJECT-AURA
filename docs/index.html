@@ -703,6 +703,13 @@
       margin-top: 10px;
     }
 
+    .camera-privacy {
+      margin: 9px 0 0;
+      color: var(--muted);
+      font-size: 0.7rem;
+      line-height: 1.5;
+    }
+
     .camera-actions button {
       flex: 1;
       padding: 0.55rem 0.65rem;
@@ -945,6 +952,7 @@
                   <video id="camera-video" autoplay muted playsinline aria-label="Live camera preview"></video>
                   <canvas id="camera-canvas" aria-hidden="true"></canvas>
                 </div>
+                <p class="camera-privacy">Camera starts when you click “Try the demo.” Video stays in your browser and is not uploaded.</p>
                 <div class="camera-actions">
                   <button id="stop-camera" type="button" disabled>Turn camera off</button>
                 </div>
