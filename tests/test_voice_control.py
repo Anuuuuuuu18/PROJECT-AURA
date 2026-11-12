@@ -1,5 +1,7 @@
+import io
 import json
 import unittest
+from unittest.mock import patch
 
 from voice_control import (
     OpenAICommandClient,
@@ -50,8 +52,26 @@ class OpenAIClientTests(unittest.TestCase):
         self.assertEqual(client.transcribe(b"\x00\x00" * 8000), "open Chrome")
         self.assertEqual(request["url"], "https://api.openai.com/v1/audio/transcriptions")
         self.assertTrue(request["content_type"].startswith("multipart/form-data; boundary="))
-        self.assertIn(b"gpt-transcribe", request["body"])
+        self.assertIn(b"gpt-4o-mini-transcribe", request["body"])
         self.assertIn(b"RIFF", request["body"])
+
+    def test_api_request_uses_the_configured_bearer_key(self):
+        client = OpenAICommandClient("test-key")
+        captured = {}
+
+        def fake_urlopen(request, timeout):
+            captured["authorization"] = request.get_header("Authorization")
+            return io.BytesIO(b'{"ok": true}')
+
+        with patch("voice_control.urllib.request.urlopen", side_effect=fake_urlopen):
+            result = client._request_json(
+                "https://api.openai.com/v1/test",
+                b"{}",
+                "application/json",
+            )
+
+        self.assertEqual(captured["authorization"], "Bearer test-key")
+        self.assertEqual(result, {"ok": True})
 
     def test_interpretation_uses_validated_structured_output(self):
         client = OpenAICommandClient("test-key")

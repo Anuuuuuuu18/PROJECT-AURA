@@ -127,7 +127,7 @@ class OpenAICommandClient:
 
         boundary = f"----AURA{uuid.uuid4().hex}"
         fields = (
-            ("model", b"gpt-transcribe"),
+            ("model", b"gpt-4o-mini-transcribe"),
             ("prompt", b"AURA desktop voice control. App names include Chrome, Edge, Firefox, and Notepad."),
         )
         body = bytearray()

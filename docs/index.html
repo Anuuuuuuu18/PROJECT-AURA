@@ -867,8 +867,8 @@
             </div>
           </div>
 
-          <div class="chip chip-a">Cursor synced ✨</div>
-          <div class="chip chip-b">Voice active 🔊</div>
+          <div class="chip chip-a">Gesture preview ✨</div>
+          <div class="chip chip-b">Windows app voice 🎙️</div>
         </div>
       </div>
     </section>
@@ -894,7 +894,7 @@
         <article class="feature-card">
           <div class="feature-icon">🎙️</div>
           <h3>Voice-first launch</h3>
-          <p>Open apps by voice. Use offline recognition by default, or opt in to OpenAI speech enhancement in the desktop app.</p>
+          <p>Open apps by voice in the Windows app. Use offline recognition by default, or opt in to OpenAI speech transcription.</p>
         </article>
       </div>
     </section>
@@ -918,7 +918,7 @@
               <div class="mock-content">
                 <span class="mock-badge">Live preview</span>
                 <h3>Hands become the interface.</h3>
-                <p>Try real-time hand tracking in your browser. Gestures move a pointer, scroll, and click inside this sample only; desktop control requires the Windows app.</p>
+                <p>Show your hand to the camera (a face alone will not trigger gestures). Hold an open palm to start, then point, pinch, or use a peace sign. Gestures affect this sample only.</p>
 
                 <div class="mock-grid">
                   <button class="mock-card" type="button">
@@ -952,7 +952,7 @@
                   <video id="camera-video" autoplay muted playsinline aria-label="Live camera preview"></video>
                   <canvas id="camera-canvas" aria-hidden="true"></canvas>
                 </div>
-                <p class="camera-privacy">Camera starts when you click “Try the demo.” Video stays in your browser and is not uploaded.</p>
+                <p class="camera-privacy">Camera starts after your click and permission. Video stays in your browser and is not uploaded. Hand tracking only; no face or voice controls.</p>
                 <div class="camera-actions">
                   <button id="stop-camera" type="button" disabled>Turn camera off</button>
                 </div>
@@ -968,11 +968,11 @@
               </div>
 
               <div class="mini-panel">
-                <h4>Voice</h4>
+                <h4>Voice · Windows app only</h4>
                 <div class="gesture-list">
-                  <div class="gesture-item"><span>Open Chrome</span><strong>▶</strong></div>
-                  <div class="gesture-item"><span>Pause AURA</span><strong>⏸</strong></div>
-                  <div class="gesture-item"><span>Resume AURA</span><strong>▶</strong></div>
+                  <div class="gesture-item"><span>OpenAI voice</span><strong>Optional</strong></div>
+                  <div class="gesture-item"><span>Voice commands</span><strong>Desktop</strong></div>
+                  <div class="gesture-item"><span>Browser voice</span><strong>Off</strong></div>
                 </div>
               </div>
             </div>
@@ -987,8 +987,8 @@
           <div style="display:flex;flex-direction:column;gap:14px;">
             <div style="padding:0.9rem 0.95rem;border-radius:16px;background:linear-gradient(135deg,#fff6fa,#ffedf6);border:1px solid rgba(242,197,220,0.9);">
               <div style="font-weight:900;color:#d95d93;letter-spacing:0.1em;text-transform:uppercase;font-size:0.7rem;">1</div>
-              <div style="font-size:1.02rem;font-weight:700;margin-top:0.35rem;">Point with your index finger</div>
-              <div style="color:var(--muted);margin-top:0.35rem;line-height:1.6;">This moves the preview cursor inside the sample window.</div>
+              <div style="font-size:1.02rem;font-weight:700;margin-top:0.35rem;">Hold open palm, then point</div>
+              <div style="color:var(--muted);margin-top:0.35rem;line-height:1.6;">Keep your hand in frame. A face alone is not tracked. Pointing moves only the preview cursor.</div>
             </div>
             <div style="padding:0.9rem 0.95rem;border-radius:16px;background:linear-gradient(135deg,#fff6fa,#ffedf6);border:1px solid rgba(242,197,220,0.9);">
               <div style="font-weight:900;color:#d95d93;letter-spacing:0.1em;text-transform:uppercase;font-size:0.7rem;">2</div>
@@ -997,8 +997,8 @@
             </div>
             <div style="padding:0.9rem 0.95rem;border-radius:16px;background:linear-gradient(135deg,#fff6fa,#ffedf6);border:1px solid rgba(242,197,220,0.9);">
               <div style="font-weight:900;color:#d95d93;letter-spacing:0.1em;text-transform:uppercase;font-size:0.7rem;">3</div>
-              <div style="font-size:1.02rem;font-weight:700;margin-top:0.35rem;">Use voice to launch apps</div>
-              <div style="color:var(--muted);margin-top:0.35rem;line-height:1.6;">Voice app commands are available in the Windows desktop app.</div>
+              <div style="font-size:1.02rem;font-weight:700;margin-top:0.35rem;">Voice is for the Windows app</div>
+              <div style="color:var(--muted);margin-top:0.35rem;line-height:1.6;">The website does not listen for voice. Run AURA locally to use voice commands or control your laptop.</div>
             </div>
           </div>
         </aside>
