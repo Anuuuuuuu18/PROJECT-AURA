@@ -574,6 +574,15 @@
       border-radius: 16px;
       background: linear-gradient(140deg, #fff3f9 0%, #ffe4f0 100%);
       border: 1px solid rgba(244, 187, 218, 0.8);
+      color: inherit;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .mock-card:focus-visible {
+      outline: 3px solid var(--pink);
+      outline-offset: 2px;
     }
 
     .mock-card small {
@@ -667,6 +676,49 @@
     }
 
     .gesture-item strong { color: var(--pink-3); }
+
+    .camera-feed {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 4 / 3;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #3c2036, #1d1020);
+      transform: scaleX(-1);
+    }
+
+    .camera-feed video,
+    .camera-feed canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .camera-feed canvas { pointer-events: none; }
+
+    .camera-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .camera-actions button {
+      flex: 1;
+      padding: 0.55rem 0.65rem;
+      border: 1px solid rgba(235, 189, 210, 0.8);
+      border-radius: 999px;
+      background: white;
+      color: var(--plum);
+      font-size: 0.75rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .camera-actions button:disabled {
+      cursor: default;
+      opacity: 0.55;
+    }
 
     .cta {
       margin-top: 24px;
@@ -859,23 +911,23 @@
               <div class="mock-content">
                 <span class="mock-badge">Live preview</span>
                 <h3>Hands become the interface.</h3>
-                <p>This browser preview simulates the controls. Run the Windows app for real desktop actions; optional OpenAI speech enhancement sends voice clips to OpenAI.</p>
+                <p>Try real-time hand tracking in your browser. Gestures move a pointer, scroll, and click inside this sample only; desktop control requires the Windows app.</p>
 
                 <div class="mock-grid">
-                  <div class="mock-card">
+                  <button class="mock-card" type="button">
                     <small>Pointer</small>
                     <strong>1 finger</strong>
-                  </div>
-                  <div class="mock-card">
+                  </button>
+                  <button class="mock-card" type="button">
                     <small>Click</small>
                     <strong>Pinch</strong>
-                  </div>
+                  </button>
                 </div>
 
                 <div class="mock-lower">
                   <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
                     <span style="font-size:0.7rem;font-weight:900;letter-spacing:0.12em;text-transform:uppercase;color:#9d7180;">Gesture feed</span>
-                    <span id="demo-status" aria-live="polite" style="font-size:0.75rem;color:#d95d93;font-weight:800;">Try moving your pointer</span>
+                    <span id="demo-status" aria-live="polite" style="font-size:0.75rem;color:#d95d93;font-weight:800;">Click “Try the demo” to start your camera</span>
                   </div>
                   <div style="margin-top:18px;display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:10px;">
                     <div style="border-radius:12px; background:rgba(255,255,255,0.6); height:52px; border:1px solid rgba(231,187,204,0.7);"></div>
@@ -887,6 +939,17 @@
             </div>
 
             <div class="side-panel">
+              <div class="mini-panel">
+                <h4>Camera · <span id="camera-state">off</span></h4>
+                <div class="camera-feed">
+                  <video id="camera-video" autoplay muted playsinline aria-label="Live camera preview"></video>
+                  <canvas id="camera-canvas" aria-hidden="true"></canvas>
+                </div>
+                <div class="camera-actions">
+                  <button id="stop-camera" type="button" disabled>Turn camera off</button>
+                </div>
+              </div>
+
               <div class="mini-panel">
                 <h4>Controls</h4>
                 <div class="gesture-list">
@@ -917,7 +980,7 @@
             <div style="padding:0.9rem 0.95rem;border-radius:16px;background:linear-gradient(135deg,#fff6fa,#ffedf6);border:1px solid rgba(242,197,220,0.9);">
               <div style="font-weight:900;color:#d95d93;letter-spacing:0.1em;text-transform:uppercase;font-size:0.7rem;">1</div>
               <div style="font-size:1.02rem;font-weight:700;margin-top:0.35rem;">Point with your index finger</div>
-              <div style="color:var(--muted);margin-top:0.35rem;line-height:1.6;">This moves the cursor smoothly through the screen.</div>
+              <div style="color:var(--muted);margin-top:0.35rem;line-height:1.6;">This moves the preview cursor inside the sample window.</div>
             </div>
             <div style="padding:0.9rem 0.95rem;border-radius:16px;background:linear-gradient(135deg,#fff6fa,#ffedf6);border:1px solid rgba(242,197,220,0.9);">
               <div style="font-weight:900;color:#d95d93;letter-spacing:0.1em;text-transform:uppercase;font-size:0.7rem;">2</div>
@@ -927,7 +990,7 @@
             <div style="padding:0.9rem 0.95rem;border-radius:16px;background:linear-gradient(135deg,#fff6fa,#ffedf6);border:1px solid rgba(242,197,220,0.9);">
               <div style="font-weight:900;color:#d95d93;letter-spacing:0.1em;text-transform:uppercase;font-size:0.7rem;">3</div>
               <div style="font-size:1.02rem;font-weight:700;margin-top:0.35rem;">Use voice to launch apps</div>
-              <div style="color:var(--muted);margin-top:0.35rem;line-height:1.6;">Say “Open Chrome” or “Resume AURA” to stay hands-free.</div>
+              <div style="color:var(--muted);margin-top:0.35rem;line-height:1.6;">Voice app commands are available in the Windows desktop app.</div>
             </div>
           </div>
         </aside>
@@ -952,8 +1015,30 @@
     const cursor = document.getElementById('cursor');
     const demo = document.querySelector('.demo-window');
     const mockContent = document.querySelector('.mock-content');
+    const mockWindow = document.querySelector('.mock-window');
     const demoStatus = document.getElementById('demo-status');
+    const cameraVideo = document.getElementById('camera-video');
+    const cameraCanvas = document.getElementById('camera-canvas');
+    const cameraState = document.getElementById('camera-state');
+    const stopCameraButton = document.getElementById('stop-camera');
+    const cameraContext = cameraCanvas.getContext('2d');
+    const handConnections = [
+      [0, 1], [1, 2], [2, 3], [3, 4], [0, 5], [5, 6], [6, 7], [7, 8],
+      [5, 9], [9, 10], [10, 11], [11, 12], [9, 13], [13, 14], [14, 15],
+      [15, 16], [13, 17], [17, 18], [18, 19], [19, 20], [0, 17]
+    ];
+    let hands;
+    let cameraStream;
+    let frameRequest;
+    let handHistory = [];
+    let previousScrollY;
+    let previousGesture;
+    let holdGesture;
+    let holdStarted = 0;
+    let paused = true;
+    let lastClick = 0;
     let pingTimer;
+    let cameraStarting = false;
 
     demo.addEventListener('pointermove', (event) => {
       const bounds = demo.getBoundingClientRect();
@@ -977,8 +1062,296 @@
       demoStatus.textContent = 'Sample page scrolled';
     }, { passive: true });
 
+    document.querySelectorAll('.mock-card').forEach((card) => {
+      card.addEventListener('click', () => {
+        setDemoStatus(`${card.querySelector('small').textContent} sample selected`);
+      });
+    });
+
+    function setDemoStatus(message) {
+      if (demoStatus.textContent !== message) demoStatus.textContent = message;
+    }
+
+    function loadHandsLibrary() {
+      if (window.Hands) return Promise.resolve();
+      return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js';
+        script.onload = resolve;
+        script.onerror = () => reject(new Error('Could not load the hand-tracking library. Check your internet connection and try again.'));
+        document.head.appendChild(script);
+      });
+    }
+
+    function distance(a, b) {
+      return Math.hypot(a.x - b.x, a.y - b.y);
+    }
+
+    function classifyHand(landmarks) {
+      const wrist = landmarks[0];
+      const thumbIp = landmarks[3];
+      const thumbTip = landmarks[4];
+      const indexPip = landmarks[6];
+      const indexTip = landmarks[8];
+      const middlePip = landmarks[10];
+      const middleTip = landmarks[12];
+      const ringPip = landmarks[14];
+      const ringTip = landmarks[16];
+      const pinkyMcp = landmarks[17];
+      const pinkyPip = landmarks[18];
+      const pinkyTip = landmarks[20];
+      const middleMcp = landmarks[9];
+      const thumbUp = distance(thumbTip, pinkyMcp) > distance(thumbIp, pinkyMcp) * 1.1;
+      const extended = (tip, pip) => distance(wrist, tip) > distance(wrist, pip) * 1.05;
+      const fingers = [
+        thumbUp,
+        extended(indexTip, indexPip),
+        extended(middleTip, middlePip),
+        extended(ringTip, ringPip),
+        extended(pinkyTip, pinkyPip)
+      ];
+      const count = fingers.filter(Boolean).length;
+      const handSize = distance(wrist, middleMcp) || 1e-6;
+      const pinchRatio = distance(thumbTip, indexTip) / handSize;
+
+      if (pinchRatio < 0.25 && (fingers[2] || fingers[3] || fingers[4])) return 'OK / Pinch';
+      if (pinchRatio < 0.25 && count <= 2) return 'Pinch';
+      if (count === 0) return 'Fist';
+      if (count === 5) return 'Open Palm';
+      if (fingers.join(',') === 'false,true,false,false,false') return 'Pointing';
+      if (fingers.join(',') === 'false,true,true,false,false') return 'Peace';
+      if (fingers.join(',') === 'false,true,true,true,false') return 'Three';
+      if (fingers.join(',') === 'false,true,true,true,true') return 'Four';
+      if (fingers.join(',') === 'false,true,false,false,true') return 'Rock';
+      if (fingers.join(',') === 'true,true,false,false,true') return 'Spider-Man';
+      if (fingers.join(',') === 'true,false,false,false,false') {
+        return thumbTip.y < wrist.y ? 'Thumbs Up' : 'Thumbs Down';
+      }
+      if (fingers.join(',') === 'false,false,false,false,true') return 'Pinky';
+      return 'Unknown';
+    }
+
+    function smoothGesture(gesture) {
+      handHistory.push(gesture);
+      if (handHistory.length > 7) handHistory.shift();
+      const counts = new Map();
+      handHistory.forEach((item) => counts.set(item, (counts.get(item) || 0) + 1));
+      return [...counts.entries()].sort((a, b) => b[1] - a[1])[0][0];
+    }
+
+    function drawHand(landmarks) {
+      const width = cameraCanvas.width;
+      const height = cameraCanvas.height;
+      cameraContext.clearRect(0, 0, width, height);
+      cameraContext.strokeStyle = '#ff8fc3';
+      cameraContext.lineWidth = Math.max(2, width / 180);
+      handConnections.forEach(([start, end]) => {
+        cameraContext.beginPath();
+        cameraContext.moveTo(landmarks[start].x * width, landmarks[start].y * height);
+        cameraContext.lineTo(landmarks[end].x * width, landmarks[end].y * height);
+        cameraContext.stroke();
+      });
+      cameraContext.fillStyle = '#fff7fb';
+      landmarks.forEach((point) => {
+        cameraContext.beginPath();
+        cameraContext.arc(point.x * width, point.y * height, Math.max(2, width / 100), 0, Math.PI * 2);
+        cameraContext.fill();
+      });
+    }
+
+    function moveDemoCursor(landmarks) {
+      const demoBounds = demo.getBoundingClientRect();
+      const targetBounds = mockWindow.getBoundingClientRect();
+      const nx = Math.max(0, Math.min(1, ((1 - landmarks[5].x) - 0.15) / 0.7));
+      const ny = Math.max(0, Math.min(1, (landmarks[5].y - 0.15) / 0.7));
+      cursor.style.left = `${targetBounds.left - demoBounds.left + nx * targetBounds.width}px`;
+      cursor.style.top = `${targetBounds.top - demoBounds.top + ny * targetBounds.height}px`;
+      cursor.classList.add('visible');
+      return ny;
+    }
+
+    function scrollDemo(y) {
+      if (previousScrollY !== undefined) {
+        const delta = y - previousScrollY;
+        if (Math.abs(delta) > 0.0025) {
+          mockContent.scrollBy({ top: delta * 700, behavior: 'auto' });
+        }
+      }
+      previousScrollY = y;
+    }
+
+    function clickDemo() {
+      const now = performance.now();
+      if (now - lastClick < 600) return;
+      lastClick = now;
+      const demoBounds = demo.getBoundingClientRect();
+      const x = demoBounds.left + parseFloat(cursor.style.left);
+      const y = demoBounds.top + parseFloat(cursor.style.top);
+      const target = document.elementFromPoint(x, y)?.closest('.mock-card');
+      if (target) target.click();
+      cursor.classList.add('ping');
+      setDemoStatus(target ? 'Pinch · sample card clicked' : 'Pinch · click simulated in preview');
+      window.clearTimeout(pingTimer);
+      pingTimer = window.setTimeout(() => cursor.classList.remove('ping'), 220);
+    }
+
+    function updateGesture(landmarks) {
+      const gesture = smoothGesture(classifyHand(landmarks));
+      const now = performance.now() / 1000;
+      if (gesture !== holdGesture) {
+        holdGesture = gesture;
+        holdStarted = now;
+      }
+
+      if (paused) {
+        if (gesture === 'Open Palm' && now - holdStarted >= 1.5) {
+          paused = false;
+          setDemoStatus('AURA active · point, pinch, or use a peace sign');
+        } else {
+          setDemoStatus(gesture === 'Open Palm' ? 'Hold open palm to start…' : `Paused · ${gesture} detected`);
+        }
+        previousGesture = gesture;
+        previousScrollY = undefined;
+        return;
+      }
+
+      if (gesture === 'Fist' && now - holdStarted >= 1) {
+        paused = true;
+        previousGesture = gesture;
+        cursor.classList.remove('visible');
+        previousScrollY = undefined;
+        setDemoStatus('Paused · hold open palm to resume');
+        return;
+      }
+
+      if (gesture === 'Pointing') {
+        const y = moveDemoCursor(landmarks);
+        scrollDemo(y);
+        setDemoStatus('Pointing · move index finger to control preview');
+      } else if (gesture === 'Peace') {
+        cursor.classList.add('visible');
+        scrollDemo((landmarks[8].y + landmarks[12].y) / 2);
+        setDemoStatus('Peace sign · scrolling preview');
+      } else {
+        previousScrollY = undefined;
+        if (gesture === 'Pinch' || gesture === 'OK / Pinch') {
+          moveDemoCursor(landmarks);
+          if (gesture !== previousGesture) clickDemo();
+          setDemoStatus('Pinch · click inside preview');
+        } else if (gesture === 'Fist') {
+          setDemoStatus('Hold fist to pause');
+        } else {
+          cursor.classList.remove('visible');
+          setDemoStatus(`${gesture} · show one finger, peace sign, or pinch`);
+        }
+      }
+      previousGesture = gesture;
+    }
+
+    async function processCameraFrame() {
+      if (!cameraStream || !hands) return;
+      try {
+        if (cameraVideo.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+          await hands.send({ image: cameraVideo });
+        }
+      } catch (error) {
+        stopCamera();
+        setDemoStatus(`Hand tracking stopped · ${error.message}`);
+        return;
+      }
+      frameRequest = window.requestAnimationFrame(processCameraFrame);
+    }
+
+    async function startCamera() {
+      if (cameraStarting || cameraStream) return;
+      cameraStarting = true;
+      setDemoStatus('Requesting camera permission…');
+      cameraState.textContent = 'starting';
+      try {
+        if (!navigator.mediaDevices?.getUserMedia) {
+          throw new Error('Camera access is unavailable. Open this site over HTTPS in a supported browser.');
+        }
+        cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false });
+        cameraVideo.srcObject = cameraStream;
+        stopCameraButton.disabled = false;
+        await cameraVideo.play();
+        if (!cameraStream) return;
+        await loadHandsLibrary();
+        if (!cameraStream) return;
+        hands = new window.Hands({
+          locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+        });
+        hands.setOptions({
+          maxNumHands: 1,
+          modelComplexity: 0,
+          minDetectionConfidence: 0.7,
+          minTrackingConfidence: 0.6
+        });
+        hands.onResults((results) => {
+          if (!cameraVideo.videoWidth) return;
+          if (cameraCanvas.width !== cameraVideo.videoWidth || cameraCanvas.height !== cameraVideo.videoHeight) {
+            cameraCanvas.width = cameraVideo.videoWidth;
+            cameraCanvas.height = cameraVideo.videoHeight;
+          }
+          const landmarks = results.multiHandLandmarks?.[0]?.landmark;
+          if (landmarks) {
+            drawHand(landmarks);
+            updateGesture(landmarks);
+          } else {
+            cameraContext.clearRect(0, 0, cameraCanvas.width, cameraCanvas.height);
+            handHistory = [];
+            previousScrollY = undefined;
+            previousGesture = undefined;
+            holdGesture = undefined;
+            cursor.classList.remove('visible');
+            setDemoStatus(paused ? 'Paused · show an open palm to start' : 'No hand detected');
+          }
+        });
+        cameraState.textContent = 'on';
+        paused = true;
+        frameRequest = window.requestAnimationFrame(processCameraFrame);
+        setDemoStatus('Camera on · hold an open palm for 1.5 seconds to start');
+      } catch (error) {
+        stopCamera();
+        cameraState.textContent = 'off';
+        setDemoStatus(error.name === 'NotAllowedError'
+          ? 'Camera permission denied · allow camera access and click Try the demo again'
+          : `Camera unavailable · ${error.message}`);
+      } finally {
+        cameraStarting = false;
+      }
+    }
+
+    function stopCamera() {
+      if (frameRequest) window.cancelAnimationFrame(frameRequest);
+      frameRequest = undefined;
+      if (cameraStream) cameraStream.getTracks().forEach((track) => track.stop());
+      cameraStream = undefined;
+      cameraVideo.srcObject = null;
+      if (hands) {
+        hands.close();
+        hands = undefined;
+      }
+      cameraContext.clearRect(0, 0, cameraCanvas.width, cameraCanvas.height);
+      stopCameraButton.disabled = true;
+      cameraState.textContent = 'off';
+      paused = true;
+      handHistory = [];
+      previousScrollY = undefined;
+      previousGesture = undefined;
+      holdGesture = undefined;
+      holdStarted = 0;
+      lastClick = 0;
+      cursor.classList.remove('visible');
+      setDemoStatus('Camera off · click “Try the demo” to start again');
+    }
+
+    stopCameraButton.addEventListener('click', stopCamera);
+    window.addEventListener('pagehide', stopCamera);
+
     document.querySelectorAll('a[href="#demo"]').forEach((link) => {
       link.addEventListener('click', () => {
+        startCamera();
         window.setTimeout(() => demo.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0);
       });
     });

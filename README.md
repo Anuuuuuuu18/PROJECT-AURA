@@ -29,7 +29,7 @@
 
 AURA is a Windows desktop application that uses a webcam to track hand gestures and offline speech recognition to control common desktop actions. Move the pointer, scroll, click with a pinch, pause or resume control, and launch supported apps by voice.
 
-The [browser demo](https://project-aura-322.netlify.app/) is an interactive preview. Desktop control requires running the Python application locally.
+The [browser demo](https://project-aura-322.netlify.app/) requests camera access when you click “Try the demo.” It tracks hand gestures locally in your browser and applies them only to the sample preview; controlling your desktop requires running the Python application locally.
 
 ## ✨ Controls
 
@@ -71,7 +71,7 @@ In this mode, detected voice clips and their transcripts are sent to OpenAI. API
 
 ## 🔒 Privacy
 
-Hand tracking runs locally. Voice recognition is local by default; `--openai` uploads detected voice clips for cloud transcription and command interpretation. The browser demo is a simulation and does not request camera or microphone access.
+Hand tracking runs locally. Voice recognition is local by default; `--openai` uploads detected voice clips for cloud transcription and command interpretation. The browser demo requests camera access only after you click “Try the demo.” Video stays in your browser and is not uploaded; the hand-tracking library and model are loaded from jsDelivr. The browser demo cannot control your system mouse or launch desktop apps.
 
 ## 📁 Project files
 
