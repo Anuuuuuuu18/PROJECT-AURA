@@ -25,13 +25,13 @@
 
 ---
 
-## 🌸 Overview
+##  Overview
 
 AURA is a Windows desktop application that uses a webcam to track hand gestures and offline speech recognition to control common desktop actions. Move the pointer, scroll, click with a pinch, pause or resume control, and launch supported apps by voice.
 
 The [browser demo](https://project-aura-322.netlify.app/) requests camera access when you click “Try the demo.” It tracks hands (not faces) locally in your browser and applies gestures only to the sample preview. It does not listen for voice or control your laptop; use the Windows app below for desktop control.
 
-## ✨ Controls
+## Controls
 
 | Gesture or command | Action |
 | --- | --- |
@@ -48,7 +48,7 @@ Live control starts paused. Resume with an open palm or voice command before usi
 
 Keep your hand clearly visible in the camera. A face in view alone does not trigger gestures. The website preview never controls the system mouse.
 
-## 💻 Getting started
+## Getting started
 
 Requirements: Windows and Python 3.10 or later.
 
@@ -79,16 +79,17 @@ python aura_controls.py --live --openai
 
 The app must be running on your laptop, and it starts paused. Say “Resume AURA” or hold an open palm to resume. Then say commands such as “scroll down” or “open Chrome.” In this mode, detected voice clips are sent to OpenAI for transcription; API usage may incur charges. Keep the key local; never commit it or put it in the public website.
 
-## 🔒 Privacy
+## Privacy
 
 Hand tracking runs locally. Voice recognition is local by default; desktop `--openai` mode uploads detected voice clips for cloud transcription and command interpretation. The browser demo requests camera access only after you click “Try the demo.” Video stays in your browser and is not uploaded; the hand-tracking library and model are loaded from jsDelivr. The browser demo cannot control your system mouse, listen for voice, or launch desktop apps.
 
-## 📁 Project files
+## Project files
 
 - `aura_controls.py` — desktop controls and safety behavior
 - `main.py` — hand tracking and gesture recognition
 - `voice_control.py` — offline voice commands and app launching
 - `docs/` — static browser demo
+
 
 ## License
 
